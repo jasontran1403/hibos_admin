@@ -18,6 +18,9 @@ const AdminInfo = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [loading, setLoading] = useState(true); // Loading state
   const [adminWallet, setAdminWallet] = useState("");
+  const [rate1, setRate1] = useState(0);
+  const [rate2, setRate2] = useState(0);
+  const [rate3, setRate3] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -74,6 +77,9 @@ const AdminInfo = () => {
         setBnbBalance(response.data.bnbBalance);
         setUsdtBalance(response.data.usdtBalance);
         setWalletAddress(response.data.walletAddress);
+        setRate1(response.data.rate1);
+        setRate2(response.data.rate2);
+        setRate3(response.data.rate3);
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +88,7 @@ const AdminInfo = () => {
   }, [accessToken]);
 
   const handleUpdate = () => {
-    if (isNaN(price) || price <= 0) {
+    if (isNaN(price) || price <= 0 || isNaN(rate1) || rate1 <= 0 || isNaN(rate2) || rate2 <= 0 || isNaN(rate3) || rate3 <= 0) {
       return;
     }
 
@@ -91,6 +97,9 @@ const AdminInfo = () => {
       privateKey: bscPrivateKey,
       walletAddress: walletAddress,
       price: price,
+      rate1: rate1,
+      rate2: rate2,
+      rate3: rate3
     });
 
     let config = {
@@ -303,6 +312,71 @@ const AdminInfo = () => {
                             value={price}
                             onChange={(e) => {
                               setPrice(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Rate1
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={rate1}
+                            onChange={(e) => {
+                              setRate1(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Rate2
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={rate2}
+                            onChange={(e) => {
+                              setRate2(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Rate3
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={rate3}
+                            onChange={(e) => {
+                              setRate3(e.target.value);
                             }}
                           />
                         </div>
