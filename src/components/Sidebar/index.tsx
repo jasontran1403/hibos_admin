@@ -16,13 +16,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [tool] = useState(localStorage.getItem('tool'));
   const [adminWallet] = useState(localStorage.getItem('wallet_address'));
 
-  useEffect(() => {
-    console.log(pathname);
-    if (tool === 'false' && adminWallet !== 'admin1' && pathname === "/tools") {
-      navigate('/');
-    }
-  }, [tool, adminWallet, navigate]);
-
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
@@ -108,10 +101,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {/* <!-- Menu Group --> */}
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-
-
-              {tool == 'true' ? (
-                <li>
+              <li>
                   <NavLink
                     to="/"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('tools') && 'bg-graydark dark:bg-meta-4'
@@ -137,9 +127,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     Admin Tools
                   </NavLink>
                 </li>
-              ) : (
-                <></>
-              )}
 
               <li>
                 <NavLink
