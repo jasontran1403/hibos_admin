@@ -15,6 +15,7 @@ const AdminInfo = () => {
   const [price, setPrice] = useState(0);
   const [bnbBalance, setBnbBalance] = useState(0);
   const [usdtBalance, setUsdtBalance] = useState(0);
+  const [bbaBalance, setBbaBalance] = useState(0);
   const [walletAddress, setWalletAddress] = useState('');
   const [loading, setLoading] = useState(true); // Loading state
   const [adminWallet, setAdminWallet] = useState("");
@@ -77,6 +78,7 @@ const AdminInfo = () => {
         setBnbBalance(response.data.bnbBalance);
         setUsdtBalance(response.data.usdtBalance);
         setWalletAddress(response.data.walletAddress);
+        setBbaBalance(response.data.bbaBalance);
         setRate1(response.data.rate1);
         setRate2(response.data.rate2);
         setRate3(response.data.rate3);
@@ -258,7 +260,7 @@ const AdminInfo = () => {
                     </div>
 
                     <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
-                      <div className="w-full sm:w-1/2">
+                      <div className="w-full sm:w-1/3">
                         <label
                           className="mb-3 block text-sm font-medium text-black dark:text-white"
                           htmlFor="walletAddress"
@@ -277,7 +279,7 @@ const AdminInfo = () => {
                         </div>
                       </div>
 
-                      <div className="w-full sm:w-1/2">
+                      <div className="w-full sm:w-1/3">
                         <label
                           className="mb-3 block text-sm font-medium text-black dark:text-white"
                           htmlFor="displayName"
@@ -290,6 +292,23 @@ const AdminInfo = () => {
                           name="displayName"
                           id="displayName"
                           value={usdtBalance}
+                          readOnly
+                        />
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="displayName"
+                        >
+                          BBA Balance
+                        </label>
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="text"
+                          name="displayName"
+                          id="displayName"
+                          value={bbaBalance}
                           readOnly
                         />
                       </div>
