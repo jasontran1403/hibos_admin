@@ -66,15 +66,10 @@ const PendingWithdrawTable: React.FC<WithdrawTableProps> = ({ data, handleApprov
     Axios.request(config)
       .then(response => {
         if (response.data === 'ok') {
-          // toast.success('Cancel withdraw order success!', {
-          //   position: 'top-right',
-          //   autoClose: 3000,
-          //   onClick: () => window.location.reload(),
-          // });
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Sign out success',
+            title: 'Cancel withdraw successful',
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {

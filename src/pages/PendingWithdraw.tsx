@@ -32,7 +32,7 @@ const PendingWithdraw = () => {
         'ngrok-skip-browser-warning': '69420',
       },
     };
-  
+
     Axios.request(config)
       .then(() => {
         localStorage.removeItem('access_token'); // Clear access token
@@ -62,7 +62,7 @@ const PendingWithdraw = () => {
       });
   }, [accessToken]);
 
-  const handleApproveAll = () => {};
+  const handleApproveAll = () => { };
 
   const handleApprove = (code: string) => {
     if (buttonDisabled) return;
@@ -88,61 +88,38 @@ const PendingWithdraw = () => {
         setButtonDisabled(true);
         let config = {
           method: 'get',
-          url: `${URL}admin/approve/${code}`,
+          url: `${URL}admin/approve-withdraw/${code}`,
           headers: {
             Authorization: `Bearer ${accessToken}`,
             'ngrok-skip-browser-warning': '69420',
           },
         };
-    
+
         Axios.request(config)
           .then((response) => {
-            if (response.data === "ok") {
-              setButtonDisabled(true);
-
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Withdraw order approve success',
-                showConfirmButton: false,
-                timer: 2000,
-              }).then(() => {
-                window.location.reload();
-              });
-            } else {
-              setButtonDisabled(false);
-
-              toast.error(response.data, {
-                position: 'top-right',
-                autoClose: 1500
-              });
-            }
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `${response.data}`,
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              window.location.reload();
+            });
           })
           .catch((error) => {
             setButtonDisabled(false);
-
             console.log(error);
           });
       }
     });
 
-    
+
   };
 
   return (
     <>
       <Breadcrumb pageName="Pending withdraw" />
-      <div className="p-4 md:p-6 xl:p-9">
-        <div className="flex flex-wrap gap-5 xl:gap-20">
-          <Link
-            to="#"
-            onClick={handleApproveAll}
-            className="inline-flex items-center justify-center rounded-md border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >
-            Approve all
-          </Link>
-        </div>
-      </div>
       <div className="flex flex-col gap-10">
         <PendingWithdrawTable
           handleApprove={handleApprove}

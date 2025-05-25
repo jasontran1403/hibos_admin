@@ -117,6 +117,16 @@ function App() {
             </>
           }
         />
+
+        <Route
+          path="/pending-withdraw"
+          element={
+            <>
+              <PageTitle title="List withdrawals" />
+              <PendingWithdraw />
+            </>
+          }
+        />
         
         <Route
           path="/settings"
