@@ -33,7 +33,7 @@ interface UserTableProps {
   onPageChange: (newPage: number) => void; // Function to handle page change
 }
 
-const UserTable: React.FC<UserTableProps> = ({ data , currentPage = 0,  totalPage = 0, onPageChange, searchTerm, onSearchChange }) => {
+const UserTable: React.FC<UserTableProps> = ({ data, currentPage = 0, totalPage = 0, onPageChange, searchTerm, onSearchChange }) => {
   const [accessToken] = useState(localStorage.getItem('access_token'));
 
   const [page, setPage] = useState(currentPage);
@@ -71,7 +71,7 @@ const UserTable: React.FC<UserTableProps> = ({ data , currentPage = 0,  totalPag
 
     let config = {
       method: 'get',
-      url: `${URL}admin/lock/${userWalletAddress}`,
+      url: `${URL}admin/toggle-status/${userWalletAddress}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'ngrok-skip-browser-warning': '69420',
@@ -83,7 +83,7 @@ const UserTable: React.FC<UserTableProps> = ({ data , currentPage = 0,  totalPag
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Toggle status success',
+          title: `${response.data}`,
           showConfirmButton: false,
           timer: 2000,
         }).then(() => {
@@ -241,9 +241,10 @@ const UserTable: React.FC<UserTableProps> = ({ data , currentPage = 0,  totalPag
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Rank
               </th>
-              {/* <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Status
               </th>
+              {/* 
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Transfer
               </th>
@@ -282,7 +283,15 @@ const UserTable: React.FC<UserTableProps> = ({ data , currentPage = 0,  totalPag
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{user.rank}</p>
                 </td>
-                
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p onClick={() => {
+                    handleToggle(user.walletAddress);
+                  }} className={`cursor-pointer font-semibold ${user.lock ? 'text-red-500' : 'text-green-500'}`}>
+                    {user.lock ? 'Locked' : 'Not Locked'}
+                  </p>
+                </td>
+
+
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <a

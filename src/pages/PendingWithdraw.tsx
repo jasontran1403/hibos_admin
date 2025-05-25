@@ -45,6 +45,8 @@ const PendingWithdraw = () => {
   };
 
   useEffect(() => {
+    if (accessToken === null || accessToken === '') return;
+    
     let config = {
       method: 'get',
       url: `${URL}admin/pending-withdraw`,
