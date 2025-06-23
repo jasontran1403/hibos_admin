@@ -84,9 +84,20 @@ const AdminInfo = () => {
         setRate3(response.data.rate3);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Session ended, please signin!", {
+          position: 'top-right',
+          autoClose: 2000,
+          onClose: () => {
+            localStorage.removeItem('access_token'); // Clear access token
+            localStorage.removeItem('tool'); // Clear access token
+            localStorage.removeItem('wallet_address'); // Clear access token
+            window.location.href = '/auth/signin';   // Redirect to signin on success
+          }
+        });
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    setLoading(false);
   }, [accessToken]);
 
   const handleUpdate = () => {

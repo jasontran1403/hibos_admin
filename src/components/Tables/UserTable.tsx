@@ -22,6 +22,8 @@ type User = {
   lock: boolean;
   lockTransaction: boolean;
   lockWithdraw: boolean;
+  lockOverride: boolean;
+  lockCommission: boolean;
 };
 
 interface UserTableProps {
@@ -37,6 +39,8 @@ const UserTable: React.FC<UserTableProps> = ({ data, currentPage = 0, totalPage 
   const [accessToken] = useState(localStorage.getItem('access_token'));
 
   const [page, setPage] = useState(currentPage);
+
+  console.log(data);
 
   const handlePrev = () => {
     if (currentPage > 0) {
@@ -98,105 +102,77 @@ const UserTable: React.FC<UserTableProps> = ({ data, currentPage = 0, totalPage 
       });
   };
 
+  const handleOverrideToggle = (userWalletAddress: string) => {
+    if (userWalletAddress === null || userWalletAddress === '') {
+      return;
+    }
+
+    let config = {
+      method: 'get',
+      url: `${URL}admin/toggle-override/${userWalletAddress}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'ngrok-skip-browser-warning': '69420',
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${response.data}`,
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: 'top-right',
+          autoClose: 1500,
+        });
+      });
+  };
+
+  const handleCommissionToggle = (userWalletAddress: string) => {
+    if (userWalletAddress === null || userWalletAddress === '') {
+      return;
+    }
+
+    let config = {
+      method: 'get',
+      url: `${URL}admin/toggle-commission/${userWalletAddress}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'ngrok-skip-browser-warning': '69420',
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${response.data}`,
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: 'top-right',
+          autoClose: 1500,
+        });
+      });
+  };
+
   const truncateAddress = (address: string) => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-6)}`;
-  };
-
-  const handleToggleTransaction = (userWalletAddress: string) => {
-    if (userWalletAddress === null || userWalletAddress === '') {
-      return;
-    }
-
-    let config = {
-      method: 'get',
-      url: `${URL}admin/lock-transaction/${userWalletAddress}`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'ngrok-skip-browser-warning': '69420',
-      },
-    };
-
-    Axios.request(config)
-      .then(() => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Toggle transfer status success',
-          showConfirmButton: false,
-          timer: 2000,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        toast.error(error, {
-          position: 'top-right',
-          autoClose: 1500,
-        });
-      });
-  };
-
-  const handleToggleWithdraw = (userWalletAddress: string) => {
-    if (userWalletAddress === null || userWalletAddress === '') {
-      return;
-    }
-
-    let config = {
-      method: 'get',
-      url: `${URL}admin/lock-withdraw/${userWalletAddress}`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'ngrok-skip-browser-warning': '69420',
-      },
-    };
-
-    Axios.request(config)
-      .then(() => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Toggle withdraw status success',
-          showConfirmButton: false,
-          timer: 2000,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        toast.error(error, {
-          position: 'top-right',
-          autoClose: 1500,
-        });
-      });
-  };
-
-  const handleToggleStaking = (walletAddress: string) => {
-    let config = {
-      method: 'get',
-      url: `${URL}admin/end-stake/${walletAddress}`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'ngrok-skip-browser-warning': '69420',
-      },
-    };
-
-    Axios
-      .request(config)
-      .then(() => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'End staking success',
-          showConfirmButton: false,
-          timer: 2000,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const copyToClipboard = (wallet: string) => {
@@ -242,18 +218,14 @@ const UserTable: React.FC<UserTableProps> = ({ data, currentPage = 0, totalPage 
                 Rank
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                Status
-              </th>
-              {/* 
-              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                Transfer
+                Transactions
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                Withdraw
+                Override
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                Staking
-              </th> */}
+                Commission
+              </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Actions
               </th>
@@ -290,7 +262,20 @@ const UserTable: React.FC<UserTableProps> = ({ data, currentPage = 0, totalPage 
                     {user.lock ? 'Locked' : 'Not Locked'}
                   </p>
                 </td>
-
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p onClick={() => {
+                    handleOverrideToggle(user.walletAddress);
+                  }} className={`cursor-pointer font-semibold ${user.lockOverride ? 'text-red-500' : 'text-green-500'}`}>
+                    {user.lockOverride ? 'Locked' : 'Not Locked'}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p onClick={() => {
+                    handleCommissionToggle(user.walletAddress);
+                  }} className={`cursor-pointer font-semibold ${user.lockCommission ? 'text-red-500' : 'text-green-500'}`}>
+                    {user.lockCommission ? 'Locked' : 'Not Locked'}
+                  </p>
+                </td>
 
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
