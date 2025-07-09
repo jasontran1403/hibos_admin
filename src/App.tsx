@@ -34,6 +34,7 @@ import AdminInfo from './pages/AdminInfo';
 import PendingDepositMCT from './pages/PendingDepositMCT';
 import PendingWithdrawMCT from './pages/PendingWithdrawMCT';
 import AdminLog from './pages/AdminLog';
+import DepositCheck from './pages/DepositCheck';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -67,6 +68,15 @@ function App() {
             <>
               <PageTitle title="Admin Log | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <AdminLog />
+            </>
+          }
+        />
+         <Route
+          path="/deposit"
+          element={
+            <>
+              <PageTitle title="Admin Log | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <DepositCheck />
             </>
           }
         />
