@@ -22,6 +22,12 @@ const AdminInfo = () => {
   const [rate1, setRate1] = useState(0);
   const [rate2, setRate2] = useState(0);
   const [rate3, setRate3] = useState(0);
+  const [totalDepositBBA, setTotalDepositBBA] = useState(0);
+  const [totalDepositUSDT, setTotalDepositUSDT] = useState(0);
+  const [totalWithdrawBBA, setTotalWithdrawBBA] = useState(0);
+  const [totalWithdrawUSDT, setTotalWithdrawUSDT] = useState(0);
+  const [dailyWithdrawBBA, setDailyWithdrawBBA] = useState(0);
+  const [dailyWithdrawUSDT, setDailyWithdrawUSDT] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -82,6 +88,12 @@ const AdminInfo = () => {
         setRate1(response.data.rate1);
         setRate2(response.data.rate2);
         setRate3(response.data.rate3);
+        setTotalDepositBBA(response.data.totalDepositBBA);
+        setTotalDepositUSDT(response.data.totalDepositUSDT);
+        setTotalWithdrawBBA(response.data.totalWithdrawBBA);
+        setTotalWithdrawUSDT(response.data.totalWithdrawUSDT);
+        setDailyWithdrawBBA(response.data.dailyWithdrawBBA);
+        setDailyWithdrawUSDT(response.data.dailyWithdrawUSDT);
       })
       .catch((error) => {
         toast.error("Session ended, please signin!", {
@@ -149,6 +161,17 @@ const AdminInfo = () => {
       .catch((error) => {
       });
   };
+
+  function formatNumber(value: any) {
+    const number = Number(value);
+
+    if (isNaN(number)) return '0';
+
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(number);
+  }
 
   const handleExportDeposit = () => {
     let config = {
@@ -408,6 +431,124 @@ const AdminInfo = () => {
                             onChange={(e) => {
                               setRate3(e.target.value);
                             }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Total Deposit BBA
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(totalDepositBBA)}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Total Withdraw BBA
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(totalWithdrawBBA)}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Daily Withdraw BBA
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(dailyWithdrawBBA)}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Total Deposit USDT
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(totalDepositUSDT)}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Total Withdraw USDT
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="text"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(totalWithdrawUSDT)}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-1/3">
+                        <label
+                          className="mb-3 block text-sm font-medium text-black dark:text-white"
+                          htmlFor="walletAddress"
+                        >
+                          Daily Withdraw USDT
+                        </label>
+                        <div className="relative">
+                          <input
+                            className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                            type="number"
+                            name="walletAddress"
+                            id="walletAddress"
+                            value={formatNumber(dailyWithdrawUSDT)}
+                            readOnly
                           />
                         </div>
                       </div>
