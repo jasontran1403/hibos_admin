@@ -11,6 +11,16 @@
 @layer components {
 }
 
+.Toastify__toast-container {
+  top: 4rem;
+  right: 1rem;         /* 👈 thêm margin sát phải, hoặc dùng 0 nếu muốn sát tuyệt đối */
+  left: auto !important; /* 👈 đảm bảo không bị chiếm bên trái */
+  width: auto;         /* 👈 không chiếm 80% nữa */
+  max-width: 80svw;    /* 👈 hoặc để theo ý bạn */
+  z-index: 9999;
+}
+
+
 .custom-confirm-button {
   background-color: lightblue;  /* Light blue background */
   color: white;                 /* White text */

@@ -129,6 +129,16 @@ function App() {
         />
 
         <Route
+          path="/gatherings"
+          element={
+            <>
+              <PageTitle title="List gathering" />
+              <InvestmentsTable />
+            </>
+          }
+        />
+
+        <Route
           path="/pending-withdraw"
           element={
             <>
