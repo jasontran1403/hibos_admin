@@ -237,15 +237,15 @@ const Settings = () => {
                       />
                     </div>
                   </div>
-                  
+
 
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
-                    <div className="w-full">
+                    <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="sales"
                       >
-                        Sales
+                        Person Sales
                       </label>
                       <div className="relative">
                         <input
@@ -254,6 +254,25 @@ const Settings = () => {
                           name="sales"
                           id="sales"
                           value={userDetail.sales || 0}
+                          min="0"
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="sales"
+                      >
+                        Total Sales
+                      </label>
+                      <div className="relative">
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="number"
+                          name="sales"
+                          id="sales"
+                          value={userDetail.totalSalesBranch || 0}
                           min="0"
                           readOnly
                         />
@@ -297,6 +316,88 @@ const Settings = () => {
                         </div>
                       </label>
                     </div> */}
+                  </div>
+
+                  <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="sales"
+                      >
+                        Total Deposit USDT
+                      </label>
+                      <div className="relative">
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="number"
+                          name="sales"
+                          id="sales"
+                          value={userDetail.totalDepositUSDT || 0}
+                          min="0"
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="sales"
+                      >
+                        Total Withdraw USDT
+                      </label>
+                      <div className="relative">
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="number"
+                          name="sales"
+                          id="sales"
+                          value={userDetail.totalWithdrawUSDT || 0}
+                          min="0"
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="sales"
+                      >
+                        Total BBA Deposit
+                      </label>
+                      <div className="relative">
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="number"
+                          name="sales"
+                          id="sales"
+                          value={userDetail.totalDepositBBA || 0}
+                          min="0"
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="sales"
+                      >
+                        Total BBA Withdraw
+                      </label>
+                      <div className="relative">
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-4 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="number"
+                          name="sales"
+                          id="sales"
+                          value={userDetail.totalWithdrawBBA || 0}
+                          min="0"
+                          readOnly
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="flex justify-end gap-4.5">
